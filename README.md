@@ -1,1 +1,3 @@
 # tinychat
+
+npm run dev
