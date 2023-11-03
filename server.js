@@ -1,8 +1,7 @@
-const http = require('http')
-const ws = require('ws')
-const WebSocketServer = ws.WebSocketServer
+import { createServer } from 'http'
+import ws, { WebSocketServer } from 'ws'
 
-const server = http.createServer((req, res) => {
+const server = createServer((req, res) => {
 	fs.readFile(__dirname + '/index.html', (err, data) => {
 		if (err) {
 			res.writeHead(404)
@@ -16,12 +15,14 @@ const server = http.createServer((req, res) => {
 })
 
 const wss = new WebSocketServer({ server })
+
 wss.on('connection', (client) => {
-	console.log('Client connected !')
+	client.on('error', console.error)
 	client.on('message', (msg) => {
 		broadcast(msg)
 	})
 })
+
 function broadcast(msg) {
 	for (const client of wss.clients) {
 		if (client.readyState === ws.OPEN) {
@@ -29,6 +30,7 @@ function broadcast(msg) {
 		}
 	}
 }
+
 server.listen('4200', () => {
 	console.log(`server listening on port 4200`)
 })

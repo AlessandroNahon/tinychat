@@ -1,14 +1,14 @@
-const ws = new WebSocket('ws://localhost:4200/')
+const socket = new WebSocket('ws://localhost:4200/')
 
-ws.addEventListener('open', () => {
+socket.addEventListener('open', () => {
 	console.log('Websocket connection opened')
 })
 
-ws.addEventListener('close', () => {
+socket.addEventListener('close', () => {
 	console.log('Websocket connection closed')
 })
 
-ws.onmessage = function (message) {
+socket.addEventListener('message', (message) => {
 	const msgDiv = document.createElement('div')
 	msgDiv.classList.add('msgCtn')
 
@@ -23,13 +23,13 @@ ws.onmessage = function (message) {
 		msgDiv.innerHTML = message.data
 		document.getElementById('messages').appendChild(msgDiv)
 	}
-}
+})
 
 const form = document.getElementById('msgForm')
 
 form.addEventListener('submit', (e) => {
 	e.preventDefault()
 	const message = document.getElementById('inputBox').value
-	ws.send(message)
+	socket.send(message)
 	document.getElementById('inputBox').value = ''
 })
