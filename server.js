@@ -15,7 +15,7 @@ const server = http.createServer((req, res) => {
 	})
 })
 
-const wss = new WebSocketServer({ server }) // (2)
+const wss = new WebSocketServer({ server })
 wss.on('connection', (client) => {
 	console.log('Client connected !')
 	client.on('message', (msg) => {
@@ -23,13 +23,12 @@ wss.on('connection', (client) => {
 	})
 })
 function broadcast(msg) {
-	// (4)
 	for (const client of wss.clients) {
 		if (client.readyState === ws.OPEN) {
 			client.send(msg)
 		}
 	}
 }
-server.listen(process.argv[2] || 8080, () => {
-	console.log(`server listening...`)
+server.listen('4200', () => {
+	console.log(`server listening on port 4200`)
 })

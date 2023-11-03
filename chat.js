@@ -1,6 +1,4 @@
-const ws = new WebSocket('ws://localhost:8080/')
-
-ws.binaryType = 'blob'
+const ws = new WebSocket('ws://localhost:4200/')
 
 ws.addEventListener('open', () => {
 	console.log('Websocket connection opened')
@@ -15,7 +13,7 @@ ws.onmessage = function (message) {
 	msgDiv.classList.add('msgCtn')
 
 	if (message.data instanceof Blob) {
-		reader = new FileReader()
+		const reader = new FileReader()
 		reader.onload = () => {
 			msgDiv.innerHTML = reader.result
 			document.getElementById('messages').appendChild(msgDiv)
