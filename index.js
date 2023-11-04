@@ -1,7 +1,7 @@
 const socket = new WebSocket('ws://localhost:4200/')
 
-socket.addEventListener('open', () => {
-	console.log('Websocket connection opened')
+socket.addEventListener('open', (cn) => {
+	console.log('Websocket connection opened', cn)
 })
 
 socket.addEventListener('close', () => {
@@ -9,12 +9,10 @@ socket.addEventListener('close', () => {
 })
 
 socket.addEventListener('message', (message) => {
-	if (message.data instanceof Blob) {
-		const reader = new FileReader()
-		reader.onload = () => displayMessage(reader.result)
-		reader.readAsText(message.data)
-	} else {
-		displayMessage(message.data)
+	const reader = decodeMessage(message)
+	reader.onload = () => {
+		const clientId = JSON.parse(message.data).id
+		displayMessage({ msg: reader.result, clientId })
 	}
 })
 
@@ -28,13 +26,29 @@ form.addEventListener('submit', (e) => {
 	document.getElementById('inputBox').value = ''
 })
 
-function displayMessage(msg) {
+function displayMessage({ msg, clientId }) {
+	const idEl = document.createElement('span')
 	const msgEl = document.createElement('div')
 	const msgCtn = document.getElementById('messages')
 
+	idEl.classList.add('clientId')
 	msgEl.classList.add('msgCtn')
-	msgEl.innerHTML = msg
+	msgEl.setAttribute('data-client-id', clientId)
 
+	msgEl.innerHTML = msg
+	idEl.innerHTML = clientId
+
+	msgCtn.appendChild(idEl)
 	msgCtn.appendChild(msgEl)
 	msgCtn.scrollTo(0, msgCtn.scrollHeight)
+}
+
+function decodeMessage(message) {
+	const buffer = JSON.parse(message.data).text.data
+	const blob = new Blob([new Uint8Array(buffer)], { type: 'text/plain' })
+	const reader = new FileReader()
+
+	reader.readAsText(blob)
+
+	return reader
 }

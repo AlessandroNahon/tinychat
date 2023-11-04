@@ -16,17 +16,34 @@ const server = createServer((req, res) => {
 
 const wss = new WebSocketServer({ server })
 
+wss.getUniqueID = () => {
+	function s4() {
+		return Math.floor((1 + Math.random()) * 0x10000)
+			.toString(16)
+			.substring(1)
+	}
+	return s4() + s4() + '-' + s4()
+}
+
 wss.on('connection', (client) => {
-	client.on('error', console.error)
+	client.id = wss.getUniqueID()
+
 	client.on('message', (msg) => {
-		broadcast(msg)
+		const message = {
+			type: 'message',
+			text: msg,
+			id: client.id,
+			date: Date.now(),
+		}
+		broadcast(JSON.stringify(message))
 	})
+	client.on('error', console.error)
 })
 
-function broadcast(msg) {
+function broadcast(data) {
 	for (const client of wss.clients) {
 		if (client.readyState === ws.OPEN) {
-			client.send(msg)
+			client.send(data)
 		}
 	}
 }
