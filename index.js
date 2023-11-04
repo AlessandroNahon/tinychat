@@ -29,7 +29,7 @@ form.addEventListener('submit', (e) => {
 function displayMessage({ msg, clientId }) {
 	const idEl = document.createElement('span')
 	const msgEl = document.createElement('div')
-	const msgCtn = document.getElementById('messages')
+	const messages = document.getElementById('messages')
 
 	idEl.classList.add('clientId')
 	msgEl.classList.add('msgCtn')
@@ -38,9 +38,23 @@ function displayMessage({ msg, clientId }) {
 	msgEl.innerHTML = msg
 	idEl.innerHTML = clientId
 
-	msgCtn.appendChild(idEl)
-	msgCtn.appendChild(msgEl)
-	msgCtn.scrollTo(0, msgCtn.scrollHeight)
+	messages.appendChild(idEl)
+	messages.appendChild(msgEl)
+	messages.scrollTo(0, messages.scrollHeight)
+	styleMessages()
+}
+
+function styleMessages() {
+	const userIds = getAllActiveUserIds()
+
+	if (userIds.length > 0) {
+		userIds.forEach((uid, i) =>
+			document.querySelectorAll(`[data-client-id='${uid}']`).forEach((e) => {
+				if (i === 0) e.style.backgroundColor = 'cornflowerblue'
+				if (i === 1) e.style.backgroundColor = 'coral'
+			})
+		)
+	}
 }
 
 function decodeMessage(message) {
@@ -51,4 +65,11 @@ function decodeMessage(message) {
 	reader.readAsText(blob)
 
 	return reader
+}
+
+function getAllActiveUserIds() {
+	const messages = document.querySelectorAll('.msgCtn')
+	const userIds = []
+	messages.forEach((m) => userIds.push(m.getAttribute('data-client-id')))
+	return [...new Set(userIds)]
 }
