@@ -37,7 +37,10 @@ wss.on('connection', (client) => {
 		}
 		broadcast(JSON.stringify(message))
 	})
+
 	client.on('error', console.error)
+
+	client.on('close', process.exit())
 })
 
 function broadcast(data) {
