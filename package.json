@@ -6,7 +6,7 @@
 	"type": "module",
 	"scripts": {
 		"test": "echo \"Error: no test specified\" && exit 1",
-		"dev": "node server.js 4200 & open public/index.html"
+		"dev": "node server.js 4200 & python3 -m http.server"
 	},
 	"author": "",
 	"license": "ISC",
