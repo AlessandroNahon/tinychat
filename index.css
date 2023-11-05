@@ -1,7 +1,14 @@
 html {
   padding: 0;
   margin: 0;
-  font-family: sans-serif;
+  font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+  background-color:rgb(41, 25, 112);
+  color: white;
+}
+
+h1 {
+  color:mistyrose;
+  letter-spacing: 0.05rem;
 }
 
 body {
@@ -25,17 +32,17 @@ body {
 }
 
 #messages {
-  max-height: 50vh;
+  display: flex;
+  flex-direction: column;
+  height: 40vh;
   overflow: scroll;
+  inline-size: 350px;
+  overflow-wrap: break-word;
 }
 
 .msg {
   color: seagreen;
   font-size: 1rem;
-}
-
-.clientId {
-  font-size: 0.75rem;
 }
 
 .msgCtn {
@@ -46,13 +53,27 @@ body {
   font-size: 1rem;
 }
 
+.user1 {
+  background-color: cornflowerblue;
+  align-self: flex-end;
+}
+
+.user2 {
+  background-color: tomato;
+  align-self: flex-start;
+}
+
 .input {
-  margin-right: 2rem;
+  margin-right: 0.5rem;
   border: none;
   border-radius: .5rem;
   padding: 1rem 0.5rem;
   font-size: 1rem;
+  width: 258px;
+  min-height: 10px;
+  height: auto;
   background-color: aliceblue;
+  overflow: auto;
 
   &:focus {
     background-color: white;
@@ -65,5 +86,8 @@ body {
   color: whitesmoke;
   border: none;
   padding: 1rem;
+}
 
+form {
+  align-self: flex-end;
 }

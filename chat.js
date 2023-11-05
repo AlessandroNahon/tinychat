@@ -17,8 +17,8 @@ function styleMessages() {
 	if (userIds.length > 0) {
 		userIds.forEach((uid, i) =>
 			document.querySelectorAll(`[data-client-id='${uid}']`).forEach((e) => {
-				if (i === 0) e.style.backgroundColor = 'cornflowerblue'
-				if (i === 1) e.style.backgroundColor = 'coral'
+				if (i === 0) e.classList.add('user1')
+				if (i === 1) e.classList.add('user2')
 			})
 		)
 	}
