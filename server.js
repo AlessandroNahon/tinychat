@@ -25,22 +25,20 @@ wss.getUniqueID = () => {
 	return s4() + s4() + '-' + s4()
 }
 
-wss.on('connection', (client) => {
-	client.id = wss.getUniqueID()
+wss.on('connection', (ws) => {
+	ws.id = wss.getUniqueID()
 
-	client.on('message', (msg) => {
+	ws.on('message', (msg) => {
 		const message = {
 			type: 'message',
 			text: msg,
-			id: client.id,
+			id: ws.id,
 			date: Date.now(),
 		}
 		broadcast(JSON.stringify(message))
 	})
 
-	client.on('error', console.error)
-
-	client.on('close', process.exit())
+	ws.on('error', console.error)
 })
 
 function broadcast(data) {

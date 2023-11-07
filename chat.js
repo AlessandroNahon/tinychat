@@ -24,16 +24,6 @@ function styleMessages() {
 	}
 }
 
-export function decodeMessage(message) {
-	const buffer = JSON.parse(message.data).text.data
-	const blob = new Blob([new Uint8Array(buffer)], { type: 'text/plain' })
-	const reader = new FileReader()
-
-	reader.readAsText(blob)
-
-	return reader
-}
-
 function getAllActiveUserIds() {
 	const messages = document.querySelectorAll('.msgCtn')
 	const userIds = []

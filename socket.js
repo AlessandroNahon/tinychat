@@ -1,4 +1,4 @@
-import { displayMessage, decodeMessage } from './chat.js'
+import { displayMessage } from './chat.js'
 
 const socket = new WebSocket('ws://localhost:4200/')
 
@@ -11,11 +11,22 @@ socket.addEventListener('close', () => {
 })
 
 socket.addEventListener('message', (message) => {
-	const reader = decodeMessage(message)
+	const data = JSON.parse(message.data)
+	const reader = decodeMessage(data)
 	reader.onload = () => {
-		const clientId = JSON.parse(message.data).id
-		displayMessage({ msg: reader.result, clientId })
+		if (data.type === 'message')
+			displayMessage({ msg: reader.result, clientId: data.id })
 	}
 })
+
+function decodeMessage(data) {
+	const buffer = data.text?.data
+	const blob = new Blob([new Uint8Array(buffer)], { type: 'text/plain' })
+	const reader = new FileReader()
+
+	reader.readAsText(blob)
+
+	return reader
+}
 
 export default socket
