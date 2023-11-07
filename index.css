@@ -52,12 +52,12 @@ body {
   font-size: 1rem;
 }
 
-.user1 {
+.user0 {
   background-color: cornflowerblue;
   align-self: flex-end;
 }
 
-.user2 {
+.user1 {
   background-color: tomato;
   align-self: flex-start;
 }

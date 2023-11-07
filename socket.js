@@ -15,7 +15,11 @@ socket.addEventListener('message', (message) => {
 	const reader = decodeMessage(data)
 	reader.onload = () => {
 		if (data.type === 'message')
-			displayMessage({ msg: reader.result, clientId: data.id })
+			displayMessage({
+				msg: reader.result,
+				clientId: data.id,
+				clients: data.clients,
+			})
 	}
 })
 

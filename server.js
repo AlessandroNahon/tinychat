@@ -15,18 +15,13 @@ const server = createServer((req, res) => {
 })
 
 const wss = new WebSocketServer({ server })
+const clients = new Set()
 
-wss.getUniqueID = () => {
-	function s4() {
-		return Math.floor((1 + Math.random()) * 0x10000)
-			.toString(16)
-			.substring(1)
-	}
-	return s4() + s4() + '-' + s4()
-}
+wss.getUniqueID = uuidv4
 
 wss.on('connection', (ws) => {
 	ws.id = wss.getUniqueID()
+	clients.add(ws.id)
 
 	ws.on('message', (msg) => {
 		const message = {
@@ -34,11 +29,26 @@ wss.on('connection', (ws) => {
 			text: msg,
 			id: ws.id,
 			date: Date.now(),
+			clients: [...clients],
 		}
 		broadcast(JSON.stringify(message))
 	})
 
 	ws.on('error', console.error)
+
+	ws.on('close', () => {
+		clients.delete(ws.id)
+	})
+
+	broadcast(
+		JSON.stringify({
+			type: 'open',
+			text: '',
+			id: ws.id,
+			date: Date.now(),
+			clients: [...clients],
+		})
+	)
 })
 
 function broadcast(data) {
@@ -52,3 +62,11 @@ function broadcast(data) {
 server.listen('4200', () => {
 	console.log(`server listening on port 4200`)
 })
+
+function uuidv4() {
+	return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
+		var uuid = (Math.random() * 16) | 0,
+			v = c == 'x' ? uuid : (uuid & 0x3) | 0x8
+		return uuid.toString(16)
+	})
+}

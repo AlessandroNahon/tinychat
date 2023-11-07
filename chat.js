@@ -1,4 +1,4 @@
-export function displayMessage({ msg, clientId }) {
+export function displayMessage({ msg, clientId, clients }) {
 	const msgEl = document.createElement('div')
 	const messages = document.getElementById('messages')
 
@@ -9,24 +9,15 @@ export function displayMessage({ msg, clientId }) {
 
 	messages.appendChild(msgEl)
 	messages.scrollTo(0, messages.scrollHeight)
-	styleMessages()
+	styleMessages(clients)
 }
 
-function styleMessages() {
-	const userIds = getAllActiveUserIds()
-	if (userIds.length > 0) {
-		userIds.forEach((uid, i) =>
-			document.querySelectorAll(`[data-client-id='${uid}']`).forEach((e) => {
-				if (i === 0) e.classList.add('user1')
-				if (i === 1) e.classList.add('user2')
-			})
+function styleMessages(clients) {
+	if (clients.length > 0) {
+		clients.forEach((uid, i) =>
+			document
+				.querySelectorAll(`[data-client-id='${uid}']`)
+				.forEach((e) => e.classList.add(`user${i}`))
 		)
 	}
-}
-
-function getAllActiveUserIds() {
-	const messages = document.querySelectorAll('.msgCtn')
-	const userIds = []
-	messages.forEach((m) => userIds.push(m.getAttribute('data-client-id')))
-	return [...new Set(userIds)]
 }
