@@ -51,6 +51,10 @@ wss.on('connection', (ws) => {
 	)
 })
 
+server.listen('4200', () => {
+	console.log(`server listening on port 4200`)
+})
+
 function broadcast(data) {
 	for (const client of wss.clients) {
 		if (client.readyState === ws.OPEN) {
@@ -58,10 +62,6 @@ function broadcast(data) {
 		}
 	}
 }
-
-server.listen('4200', () => {
-	console.log(`server listening on port 4200`)
-})
 
 function uuidv4() {
 	return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {

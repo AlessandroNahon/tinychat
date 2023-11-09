@@ -1,4 +1,4 @@
-import { displayMessage } from './chat.js'
+import { displayMessage, displayUsers } from './chat.js'
 
 const socket = new WebSocket('ws://localhost:4200/')
 
@@ -20,6 +20,9 @@ socket.addEventListener('message', (message) => {
 				clientId: data.id,
 				clients: data.clients,
 			})
+		if (data.type === 'open') {
+			displayUsers(data.clients)
+		}
 	}
 })
 

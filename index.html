@@ -11,15 +11,18 @@
 
 <body>
   <h1>Tiny Chat</h1>
-  <section class="chat">
-    <div class="container">
-      <div id="messages" class="messages"></div>
-      <form id="msgForm" class="msgForm">
-        <input type="text" placeholder="Send message" class="input" id="inputBox" />
-        <input type="submit" class="btn" value="Send">
-      </form>
-    </div>
-  </section>
+  <main>
+    <section class="chat">
+      <div class="container">
+        <div id="messages" class="messages"></div>
+        <form id="msgForm" class="msgForm">
+          <input type="text" placeholder="Send message" class="input" id="inputBox" />
+          <input type="submit" class="btn" value="Send">
+        </form>
+      </div>
+    </section>
+    <section id="metadata"></section>
+  </main>
 
   <script type="module" src="./index.js"></script>
   <script type="module" src="./socket.js"></script>

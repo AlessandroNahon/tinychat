@@ -6,7 +6,7 @@ html {
 }
 
 h1 {
-  color:mistyrose;
+  color:navajowhite;
   letter-spacing: 0.05rem;
 }
 
@@ -15,6 +15,16 @@ body {
   padding: 1rem;
   height: calc(100vh - 2rem);
   width: calc(100vw - 2rem);
+}
+
+main {
+  display: flex;
+  justify-content: center;
+  align-items: self-end;
+}
+
+#metadata {
+  margin-left: 1rem;
 }
 
 .chat {
@@ -52,14 +62,40 @@ body {
   font-size: 1rem;
 }
 
+.clientId {
+  display: block;
+  padding-bottom: 0.5rem;
+  color: blanchedalmond;
+  font-size: 0.75rem;
+}
+
+.clientId0, 
+.user0 {
+  align-self: flex-end;
+}
+
+.clientId1,
+.user1 {
+  align-self: flex-start;
+}
+
 .user0 {
   background-color: cornflowerblue;
-  align-self: flex-end;
 }
 
 .user1 {
   background-color: tomato;
-  align-self: flex-start;
+}
+
+.users {
+  color:bisque;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+
+  & > li {
+    padding-top: 1rem;
+  }
 }
 
 .input {
