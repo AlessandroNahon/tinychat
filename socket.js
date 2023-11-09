@@ -14,15 +14,14 @@ socket.addEventListener('message', (message) => {
 	const data = JSON.parse(message.data)
 	const reader = decodeMessage(data)
 	reader.onload = () => {
+		if (data.type === 'open') displayUsers(data.clients)
+
 		if (data.type === 'message')
 			displayMessage({
 				msg: reader.result,
 				clientId: data.id,
 				clients: data.clients,
 			})
-		if (data.type === 'open') {
-			displayUsers(data.clients)
-		}
 	}
 })
 

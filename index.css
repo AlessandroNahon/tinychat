@@ -65,7 +65,6 @@ main {
 .clientId {
   display: block;
   padding-bottom: 0.5rem;
-  color: blanchedalmond;
   font-size: 0.75rem;
 }
 
@@ -77,6 +76,14 @@ main {
 .clientId1,
 .user1 {
   align-self: flex-start;
+}
+
+.clientId0 {
+  color: cornflowerblue;
+}
+
+.clientId1 {
+  color: tomato;
 }
 
 .user0 {
@@ -95,6 +102,14 @@ main {
 
   & > li {
     padding-top: 1rem;
+  }
+
+  & li:nth-child(2) {
+    color: cornflowerblue;
+  }
+
+  & li:nth-child(3) {
+    color: tomato;
   }
 }
 
